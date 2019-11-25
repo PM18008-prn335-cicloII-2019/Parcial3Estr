@@ -6,71 +6,70 @@ typedef struct Dato
 {
     char caracter;
     struct Dato * Siguiente;
-}_Dato;
+}dato;
  
-typedef _Dato * ptrDato;
+typedef dato * ptrDato;
  
 void push(ptrDato * Pila,char caracter);
 char pop(ptrDato * Pila);
-int Prioridad(char Op1,char Op2);
-char * PostFija(char * Cadena);
-int Evaluar(char * Expresion);
+int Prioridad(char Operador1,char Operador2);
+char * PostFija(char * expresion);
  
 int main(){
 
     printf("Ingrese una expresion infija:\n");
-    char Cadena[50];
-    gets(Cadena);
+    char expresion[50];
+    gets(expresion);
  
-    char * Expresion = PostFija(Cadena);
+    char * expPostfija = PostFija(expresion);
  
-    printf("POSTFIJA: %s\n",Expresion);
+    printf("POSTFIJA: %s\n",expPostfija);
 
 
  
     return 0;
 }
  
-char * PostFija(char * cadena){
+char * PostFija(char * expresion){
 
     ptrDato Pila = NULL;
     int i = 0,a = 0, Elementos = 0,Longitud = 0;
     char dato;
  
-    Longitud = strlen(cadena);
+    Longitud = strlen(expresion);
  
     char * buffer = (char*) malloc(Longitud);
     memset(buffer,0,Longitud);
  
-    while(cadena[i] != '\0'){
+    while(expresion[i] != '\0'){
     
-        if (cadena[i] == '('){
+        if (expresion[i] == '('){
         
-            push(&Pila,cadena[i]);
+            push(&Pila,expresion[i]);
             Elementos += 1;
-        }else if (cadena[i] == ')'){
+        }else if (expresion[i] == ')'){
             while(1){
             
                 dato = pop(&Pila);
                 Elementos -= 1;
  
-                if(dato == '(')
-                {
+                if(dato == '('){
+                
                     break;
                 }else{
                     buffer[a] = dato;
                     a += 1;
                 }
             }
-        }else if(cadena[i] == '*' || cadena[i]  == '/' || cadena[i] == '+' || cadena[i] == '-'){
+        }else if(expresion[i] == '*' || expresion[i]  == '/' || expresion[i] == '+' || expresion[i] == '-'){
             RepetirProceso:
-            if (Elementos == 0)
-            {
-                push (&Pila,cadena[i]);
+            if (Elementos == 0){
+            
+                push (&Pila,expresion[i]);
                 Elementos += 1;
-            }else if(Prioridad(Pila->caracter,cadena[i]) == 1)
-            {
-                push(&Pila,cadena[i]);
+            }else if(Prioridad(Pila->caracter,expresion[i]) == 1){
+            
+                push(&Pila,expresion[i]);
                 Elementos += 1;
             }else if (Pila->caracter != '('){
                 dato = pop(&Pila);
@@ -82,7 +81,7 @@ char * PostFija(char * cadena){
                 goto RepetirProceso;
             }
         }else{
-            buffer[a] = cadena[i];
+            buffer[a] = expresion[i];
             a += 1;
         }
         i++;
@@ -96,12 +95,12 @@ char * PostFija(char * cadena){
     return buffer;
 }
  
-int Prioridad(char Op1,char Op2){
+int Prioridad(char Operador1,char Operador2){
 
         int Estado = 1;
  
-        if (Op1 == '*' && Op2 == '-' || Op1 == '*' && Op2 == '+' || Op1 == '/' && Op2 == '-' || Op1 == '/' && Op2 == '+')
-        {
+        if (Operador1 == '*' && Operador2 == '-' || Operador1 == '*' && Operador2 == '+' || Operador1 == '/' && Operador2 == '-' || Operador1 == '/' && Operador2 == '+'){
+        
             Estado = 0;
         }
  
@@ -110,30 +109,30 @@ int Prioridad(char Op1,char Op2){
  
 char pop(ptrDato * Pila){
 
-    ptrDato ViejoDato;
-    char _caracter;
+    ptrDato datoAntiguo;
+    char Caracter;
  
-    ViejoDato = *Pila;
-    _caracter = (*Pila)->caracter;
+    datoAntiguo = *Pila;
+    Caracter = (*Pila)->caracter;
  
     *Pila = (*Pila)->Siguiente;
  
-    free(ViejoDato);
+    free(datoAntiguo);
  
-    return _caracter;
+    return Caracter;
 }
 void push(ptrDato * Pila,char caracter){
 
-    ptrDato NuevoDato;
+    ptrDato nuevoDato;
  
-    NuevoDato = (ptrDato)malloc(sizeof(_Dato));
-    memset(NuevoDato,0,sizeof(_Dato));
+    nuevoDato = (ptrDato)malloc(sizeof(dato));
+    memset(nuevoDato,0,sizeof(dato));
  
-    if (NuevoDato != NULL)
-    {
-        NuevoDato->caracter = caracter;
-        NuevoDato->Siguiente = *Pila;
+    if (nuevoDato != NULL){
+    
+        nuevoDato->caracter = caracter;
+        nuevoDato->Siguiente = *Pila;
  
-        *Pila = NuevoDato;
+        *Pila = nuevoDato;
     }
 }
