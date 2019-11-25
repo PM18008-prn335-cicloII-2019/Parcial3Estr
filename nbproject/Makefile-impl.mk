@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Parcial3
+PROJECTNAME=Parcial3Estr
 
 # Active Configuration
 DEFAULTCONF=Debug
