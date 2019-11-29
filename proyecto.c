@@ -15,15 +15,17 @@ char pop(ptrDato * Pila);
 int Prioridad(char Operador1,char Operador2);
 char * PostFija(char * expresion);
 char * PreFija(char * expresion);
-int Prioridad2(char Operador1, char Operador2);
- 
+
+//Funcion main
 int main(){
 
+    printf("\tESTRUCTURA DE DATOS\nMartinez Flores Vladimir Enrique MF18030\nPortillo Merlos Melvin Ernesto PM18008\n");
+    printf("---------------------------------------\n\n");
     printf("Ingrese una expresion infija:\n");
     char expresion[50];
     gets(expresion);
     
-    printf("Ingrese una opcion: 1.prefija 2.postfija\n");
+    printf("Ingrese una opcion: \n1. Prefija \n2. Postfija\nOtro. Salir\n");
     int opcion;
     scanf("%d", &opcion);
  
@@ -42,11 +44,11 @@ int main(){
             
         }
         char * expPrefija = PreFija(expresion2);
-            printf("PREFIJA: %s\n",expPrefija);
+            printf("\n\nPREFIJA: %s\n",expPrefija);
     }else{
         if(opcion==2){
             char * expPostfija = PostFija(expresion);
-            printf("POSTFIJA: %s\n",expPostfija);
+            printf("\n\nPOSTFIJA: %s\n",expPostfija);
         }
     }
     
@@ -57,7 +59,8 @@ int main(){
  
     return 0;
 }
- 
+
+//Funcion que realiza el cambio de Infija a Postfija
 char * PostFija(char * expresion){
 
     ptrDato Pila = NULL;
@@ -123,6 +126,7 @@ char * PostFija(char * expresion){
     return buffer;
 }
 
+//Funcion que realiza el cambio de Infija a Prefija
 char * PreFija(char * expresion){
     ptrDato Pila = NULL;
     int i = 0,a = 0, Elementos = 0,Longitud = 0;
@@ -191,24 +195,12 @@ char * PreFija(char * expresion){
 
 }
 
- 
+//Comparamos la prioridad entre los signos
 int Prioridad(char Operador1,char Operador2){
 
         int Estado = 1;
  
-        if ( Operador1 == '^' && Operador2 == '*'|| Operador1 == '^' && Operador2 == '/'|| Operador1 == '*' && Operador2 == '-' || Operador1 == '*' && Operador2 == '+' || Operador1 == '/' && Operador2 == '-' || Operador1 == '/' && Operador2 == '+'){
-        
-            Estado = 0;
-        }
- 
-        return Estado;
-}
-//no ayuda
-int Prioridad2(char Operador1,char Operador2){
-
-        int Estado = 1;
- 
-        if (Operador1 == '-' && Operador2 == '*' || Operador1 == '+' && Operador2 == '*' || Operador1 == '-' && Operador2 == '/' || Operador1 == '+' && Operador2 == '/'){
+        if ( Operador1 == '^' && Operador2 == '+' || Operador1 == '^' && Operador2 == '-'|| Operador1 == '^' && Operador2 == '*'|| Operador1 == '^' && Operador2 == '/'|| Operador1 == '*' && Operador2 == '-' || Operador1 == '*' && Operador2 == '+' || Operador1 == '/' && Operador2 == '-' || Operador1 == '/' && Operador2 == '+'){
         
             Estado = 0;
         }
@@ -216,6 +208,7 @@ int Prioridad2(char Operador1,char Operador2){
         return Estado;
 }
  
+//Funcion para borrar el tope de la pila
 char pop(ptrDato * Pila){
 
     ptrDato datoAntiguo;
@@ -230,6 +223,8 @@ char pop(ptrDato * Pila){
  
     return Caracter;
 }
+
+//Funcion para insertar valor en la pila
 void push(ptrDato * Pila,char caracter){
 
     ptrDato nuevoDato;
